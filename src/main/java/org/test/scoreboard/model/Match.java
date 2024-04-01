@@ -1,6 +1,7 @@
 package org.test.scoreboard.model;
 
 import java.time.Instant;
+import java.util.Objects;
 
 public class Match {
 
@@ -20,6 +21,19 @@ public class Match {
         this.teamHome = teamHome;
         this.teamGuest = teamGuest;
         this.score = score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Match match = (Match) o;
+        return Objects.equals(startedAt, match.startedAt) && Objects.equals(teamHome, match.teamHome) && Objects.equals(teamGuest, match.teamGuest) && Objects.equals(score, match.score);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startedAt, teamHome, teamGuest, score);
     }
 
     public Instant getStartedAt() {

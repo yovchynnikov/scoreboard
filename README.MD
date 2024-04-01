@@ -12,5 +12,6 @@ Test cases:
 - finish match -> match not in scoreboard
 - finish match if match doesn't exist -> throw exception
 - create match after finishing -> match in scoreboard
+- validations: empty team name(s), negative score(s)
 
 WIP.

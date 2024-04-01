@@ -3,8 +3,7 @@ package org.test.scoreboard;
 import org.test.scoreboard.model.Match;
 import org.test.scoreboard.model.Score;
 
-import java.util.Collection;
-import java.util.stream.Stream;
+import java.util.List;
 
 public class ScoreboardImpl implements Scoreboard {
 
@@ -24,7 +23,7 @@ public class ScoreboardImpl implements Scoreboard {
     }
 
     @Override
-    public Collection<Match> getScoreboard() {
+    public List<Match> getScoreboard() {
         return null;
     }
 }

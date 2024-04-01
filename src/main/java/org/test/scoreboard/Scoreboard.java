@@ -5,7 +5,7 @@ import org.test.scoreboard.exceptions.TeamAlreadyPlays;
 import org.test.scoreboard.model.Match;
 import org.test.scoreboard.model.Score;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface Scoreboard {
 
@@ -15,5 +15,5 @@ public interface Scoreboard {
 
     Match finishMatch(String teamA, String teamB) throws MatchNotFound;
 
-    Collection<Match> getScoreboard();
+    List<Match> getScoreboard();
 }
