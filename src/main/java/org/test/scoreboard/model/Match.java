@@ -12,10 +12,6 @@ public class Match {
 
     private final Score score;
 
-    public Match(Instant startedAt, String teamHome, String teamGuest) {
-        this(startedAt, teamHome, teamGuest, Score.EMPTY_SCORE);
-    }
-
     public Match(Instant startedAt, String teamHome, String teamGuest, Score score) {
         this.startedAt = startedAt;
         this.teamHome = teamHome;
@@ -36,6 +32,16 @@ public class Match {
         return Objects.hash(startedAt, teamHome, teamGuest, score);
     }
 
+    @Override
+    public String toString() {
+        return "Match{" +
+                "startedAt=" + startedAt +
+                ", teamHome='" + teamHome + '\'' +
+                ", teamGuest='" + teamGuest + '\'' +
+                ", score=" + score +
+                '}';
+    }
+
     public Instant getStartedAt() {
         return startedAt;
     }
@@ -50,5 +56,9 @@ public class Match {
 
     public Score getScore() {
         return score;
+    }
+
+    public Match withScore(Score score) {
+        return new Match(this.startedAt, this.teamHome, this.teamGuest, score);
     }
 }

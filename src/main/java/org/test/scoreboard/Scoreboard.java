@@ -1,7 +1,7 @@
 package org.test.scoreboard;
 
-import org.test.scoreboard.exceptions.MatchNotFound;
-import org.test.scoreboard.exceptions.TeamAlreadyPlays;
+import org.test.scoreboard.exceptions.MatchNotFoundException;
+import org.test.scoreboard.exceptions.TeamAlreadyPlaysException;
 import org.test.scoreboard.model.Match;
 import org.test.scoreboard.model.Score;
 
@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface Scoreboard {
 
-    Match createMatch(String teamA, String teamB) throws TeamAlreadyPlays;
+    Match createMatch(String teamHome, String teamGuest) throws TeamAlreadyPlaysException;
 
-    Match updateMatch(String teamA, String teamB, Score score) throws MatchNotFound;
+    void updateMatch(String teamHome, String teamGuest, Score score) throws MatchNotFoundException;
 
-    Match finishMatch(String teamA, String teamB) throws MatchNotFound;
+    void finishMatch(String teamHome, String teamGuest) throws MatchNotFoundException;
 
     List<Match> getScoreboard();
 }

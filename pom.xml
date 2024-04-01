@@ -23,6 +23,12 @@
             <version>3.25.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <scope>test</scope>
+            <version>3.14.0</version>
+        </dependency>
     </dependencies>
 
     <properties>
