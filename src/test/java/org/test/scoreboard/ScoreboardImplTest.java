@@ -56,7 +56,9 @@ class ScoreboardImplTest {
         Instant before = Instant.now();
 
         Match expected = new Match(before, teamHome, teamGuest, Score.EMPTY_SCORE);
-        scoreboard.createMatch(generateRandomTeamName(), generateRandomTeamName());
+        Match previousMatch = scoreboard.createMatch(generateRandomTeamName(), generateRandomTeamName());
+        // just to be sure the new match will get created GT previous
+        while (previousMatch.getStartedAt().equals(Instant.now())) {};
         scoreboard.createMatch(teamHome, teamGuest);
 
         List<Match> results = scoreboard.getScoreboard();

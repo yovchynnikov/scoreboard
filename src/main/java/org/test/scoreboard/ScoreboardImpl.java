@@ -7,20 +7,12 @@ import org.test.scoreboard.model.Score;
 import org.test.scoreboard.model.TeamsPair;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 public class ScoreboardImpl implements Scoreboard {
-
-    private final Set<Match> orderedMatches = new ConcurrentSkipListSet<>(
-            Comparator.<Match, Integer>comparing(m -> m.getScore().totalScore())
-                    .thenComparing(Match::getStartedAt)
-                    .reversed());
 
     private final Map<String, String> teams = new ConcurrentHashMap<>();
 
@@ -35,10 +27,11 @@ public class ScoreboardImpl implements Scoreboard {
         }
         TeamsPair key = constructKey(teamHome, teamGuest);
         Match result = new Match(Instant.now(), teamHome, teamGuest, Score.EMPTY_SCORE);
+
         teams.put(teamHome, teamHome);
         teams.put(teamGuest, teamGuest);
-        orderedMatches.add(result);
         matches.put(key, result);
+
         return result;
     }
 
@@ -57,8 +50,6 @@ public class ScoreboardImpl implements Scoreboard {
             throw new MatchNotFoundException();
         }
         Match newMatch = oldMatch.withScore(score);
-        orderedMatches.remove(oldMatch);
-        orderedMatches.add(newMatch);
         matches.put(key, newMatch);
     }
 
@@ -75,14 +66,17 @@ public class ScoreboardImpl implements Scoreboard {
         if (existed == null) {
             throw new MatchNotFoundException();
         }
-        orderedMatches.remove(existed);
         teams.remove(existed.getTeamHome());
         teams.remove(existed.getTeamGuest());
     }
 
     @Override
     public List<Match> getScoreboard() {
-        return new ArrayList<>(orderedMatches);
+        return matches.values().stream()
+                .sorted(Comparator.<Match, Integer>comparing(m -> m.getScore().totalScore())
+                        .thenComparing(Match::getStartedAt)
+                        .reversed())
+                .toList();
     }
 
     private static TeamsPair constructKey(String teamHome, String teamGuest) {
